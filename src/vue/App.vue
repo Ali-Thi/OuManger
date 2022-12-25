@@ -1,29 +1,26 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+import Navbar from './components/Navbar.vue'
+import Main from './components/Main.vue'
+import Modal from './components/modal/Modal.vue';
+
+export default {
+  components: {
+    Navbar,
+    Main,
+    Modal,
+  }
+}
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="../assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
+  <header class="bg-white fixed top-0 w-full shadow" style="z-index: 1000">
+  <Navbar />
+  </header>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+  <div class="fixed absolute top-20 w-auto h-auto bg-black bg-opacity-0 z-50">
+      <Modal type="connexion"/>
+  </div>
+
+  <Main/>
+</template>
