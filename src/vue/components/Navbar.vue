@@ -20,7 +20,6 @@ export default {
       boutons: [
         { id: id++, text: 'Login', modalType: "connexion"},
         { id: id++, text: "S'inscrire", modalType: "inscription"},
-        { id: id++, text: 'Contact', modalType: "none"},
       ],
     };
   },

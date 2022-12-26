@@ -64,12 +64,12 @@ export default {
     </form>
   </div>
 
-  <div class="content lg:flex justify-center mt-4">
-    <div class="mx-auto">
+  <div class="grid grid-cols-1 lg:grid-cols-3 my-10">
+    <div class="mx-auto w-4/5 h-screen rounded col-span-2">
       <Map/>
     </div>
 
-    <div class="max-w-2xl w-fulll mx-auto px-4 py-8 grid grid-cols-1 lg:max-w-6xl lg:mr-10
+    <div class="max-w-2xl mx-auto px-4 grid grid-cols-1 lg:max-w-6xl lg:mr-10
       gap-y-10 gap-x-8 lg:grid-cols-2">
       <TilePresentation/>
       <TilePresentation/>

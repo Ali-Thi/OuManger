@@ -2,12 +2,13 @@
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet'
 export default {
-  mount() {
+  mounted() {
     this.mymap = L.map('map').setView([48.866295694987045, 2.3440361022949223], 13);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.mymap);
+    console.log("fin mount Map")
   },
   data() {
     return {
@@ -18,12 +19,5 @@ export default {
 </script>
 
 <template>
-  <div id="map"></div>
+  <div id="map" class="w-full h-4/5"></div>
 </template>
-
-<style>
-#map {
-  width: 400px;
-  height: 400px;
-}
-</style>
