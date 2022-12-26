@@ -1,3 +1,14 @@
+<script>
+export default {
+  emits: ['switch'],
+  methods: {
+    created() {
+      this.$emit('switch')
+    }
+  }
+}
+</script>
+
 <template>
   <div class="grid grid-cols-1 place-items-center gap-y-6">
     <img src="../../../assets/icon_user.png" class="w-16 h-16"
@@ -21,7 +32,7 @@
         focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
       <p class="text-sm font-sans mt-2 pt-1 mb-0">
         Pas de compte ?
-        <a href="#!" class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out">Inscription</a>
+        <span @click="created" class="text-blue-700 hover:text-blue-800 hover:cursor-pointer focus:text-blue-800 transition duration-200 ease-in-out">Inscription</span>
       </p>
     </form>
   </div>

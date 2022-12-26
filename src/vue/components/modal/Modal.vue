@@ -5,6 +5,7 @@ import Inscription from "./Inscription.vue"
 const EnumMode = {connexion: "connexion", inscription: "inscription"}
 
 export default {
+  emits: ['close'],
   components: {
     Connexion,
     Inscription
@@ -27,6 +28,9 @@ export default {
   methods: {
     switchModal(e) {
       this.mode = (this.mode === EnumMode.inscription) ? EnumMode.connexion : EnumMode.inscription;
+    },
+    created(){
+      this.$emit('close')
     }
   },
   mounted() {
@@ -45,15 +49,19 @@ export default {
 </script>
 
 <template>
-  <div class="bg-white w-full h-full">
-    <header class="flex flex-row h-8 w-full jusitfy-center mb-8">
+  <div class="bg-white w-auto h-full">
+    <header class="flex flex-row h-8 w-full jusitfy-center">
       <span @click="switchModal" ref="boutonConnexion" class="h-full w-full text-center">Connexion</span>
       <span @click="switchModal" ref="boutonInscription" class="h-full w-full text-center">S'inscrire</span>
     </header>
+    <div class="mb-8 pt-2 pr-2">
+      <img @click="created" src="../../../assets/close_icon.png" class="w-5 h-5 float-right hover:cursor-pointer">
+    </div>
+
 
     <div class="px-16 pb-8">
-      <Connexion v-if="this.mode === 'connexion'"/>
-      <Inscription v-else/>
+      <Connexion v-if="this.mode === 'connexion'" @switch="switchModal"/>
+      <Inscription v-else @switch="switchModal"/>
     </div>
 
   </div>
