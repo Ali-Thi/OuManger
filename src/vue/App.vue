@@ -27,12 +27,12 @@ export default {
 </script>
 
 <template>
-  <header class="bg-white fixed top-0 w-full shadow" style="z-index: 1000">
+  <header class="bg-white fixed top-0 w-full shadow" style="z-index: 1010">
   <Navbar @event="handleNavEvent"/>
   </header>
 
   <div v-if="this.showModal" class="flex justify-center">
-    <div class="fixed absolute top-20 w-auto h-auto z-50">
+    <div class="fixed top-20 w-auto h-auto" style="z-index: 1002">
         <Modal :type="this.typeModal" @close="() => {this.showModal = false}"/>
     </div>
   </div>
