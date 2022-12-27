@@ -34,8 +34,8 @@ export default {
       <Map :datas="this.restaurants"/>
     </div>
 
-    <div class="mx-auto px-4 w-full h-full grid grid-cols-1 gap-y-10 gap-x-8 overflow-x-scroll
-     lg:mr-10 lg:grid-cols-2 lg:overflow-y-scroll">
+    <div class="mx-auto px-4 w-full h-auto grid grid-cols-1 gap-y-10 gap-x-8 overflow-x-scroll
+     lg:mr-10 lg:overflow-y-scroll">
 
         <ListRestaurants :datas="this.restaurants"/>
 

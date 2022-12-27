@@ -11,10 +11,9 @@ export default {
 </script>
 
 <template>
-  <ul class="w-full grid grid-rows-1">
-    <li v-for="data in this.datas" :key="data.id" class="list-none">
-<!--    <li class="list-none">-->
-      <TilePresentation :nom="data.text" :adresse="data.adresse" note="3"/>
+  <ul class="w-full flex flex-col">
+    <li v-for="data in this.datas" :key="data.id" class="list-none inline-block mb-3">
+      <TilePresentation :nom="data.text" :adresse="data.adresse" :note="data.note"/>
     </li>
   </ul>
 </template>

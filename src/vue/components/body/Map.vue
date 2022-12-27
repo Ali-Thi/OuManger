@@ -33,7 +33,11 @@ export default {
 
       newVal.forEach(element => {
         const marker = L.marker(element.coord, {riseOnHover: true}).addTo(this.mymap)
-        const popup = L.popup().setContent('<strong>' + element.text + '</strong><p>' + element.adresse + '</p>');
+        const popup = L.popup().setContent(
+            '<strong>' + element.text + '</strong>' +
+            '<span style="margin-left: 1rem">' + element.note + '</span>' +
+            '<img src="/src/assets/star-icon.png" style="display: inline-block; height: 1.25rem; width: 1.25rem;">' +
+            '<p>' + element.adresse + '</p>');
         marker.bindPopup(popup);
         this.markers.push(marker);
       })
