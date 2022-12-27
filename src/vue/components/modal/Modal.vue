@@ -48,7 +48,8 @@ export default {
 </script>
 
 <template>
-    <div class="bg-white w-auto h-full">
+  <div class="fixed top-20 w-auto h-auto" style="z-index: 1030">
+  <div class="bg-white w-auto h-full">
       <header class="flex flex-row h-8 w-full jusitfy-center">
         <span @click="switchModal" ref="boutonConnexion" class="h-full w-full text-center">Connexion</span>
         <span @click="switchModal" ref="boutonInscription" class="h-full w-full text-center">S'inscrire</span>
@@ -61,6 +62,7 @@ export default {
       <div class="px-16 pb-8">
         <Connexion v-if="this.mode === 'connexion'" @switch="switchModal"/>
         <Inscription v-else @switch="switchModal"/>
+      </div>
       </div>
 
     </div>

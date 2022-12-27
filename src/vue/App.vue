@@ -11,7 +11,6 @@ export default {
   },
   methods: {
     handleNavEvent(text){
-      console.log("handleNavEvent")
       this.showModal = true
       this.typeModal = text.toLowerCase()
     }
@@ -27,15 +26,17 @@ export default {
 </script>
 
 <template>
-  <header class="bg-white fixed top-0 w-full shadow" style="z-index: 1010">
+  <header class="bg-white top-0 w-full shadow" style="z-index: 1001">
   <Navbar @event="handleNavEvent"/>
   </header>
 
-  <div v-if="this.showModal" class="flex justify-center">
-    <div class="fixed top-20 w-auto h-auto" style="z-index: 1002">
+  <div v-if="this.showModal">
+    <div @click.self="() => {this.showModal = false}" class="fixed top-0 left-0 flex w-screen h-screen bg-black bg-opacity-50 justify-center" style="z-index: 1020">
         <Modal :type="this.typeModal" @close="() => {this.showModal = false}"/>
     </div>
   </div>
 
-  <Main/>
+  <div class="lg:h-full">
+    <Main />
+  </div>
 </template>
