@@ -4,7 +4,7 @@ import NavButton from './nav/NavButton.vue';
 let id = 1;
 
 export default {
-  emits: ['logSignIn', 'logOut'],
+  emits: ['openModal', 'logOut'],
   methods: {
     handleEvents(text){
       if(text === 'logOut'){
@@ -14,8 +14,8 @@ export default {
         const boutonAuteur = this.boutons.find((element) => {
           return element.text === text
         })
-        if (boutonAuteur.modalType !== "none")
-          this.$emit('logSignIn', boutonAuteur.modalType)
+        if (boutonAuteur !== null)
+          this.$emit('openModal', boutonAuteur.modalType)
       }
     }
   },
@@ -28,8 +28,8 @@ export default {
   data() {
     return {
       boutons: [
-        { id: id++, text: 'Login', modalType: "connexion"},
-        { id: id++, text: "S'inscrire", modalType: "inscription"},
+        { id: id++, text: 'Connexion', modalType: "connexion"},
+        { id: id++, text: 'Inscription', modalType: "inscription"},
       ],
     };
   }

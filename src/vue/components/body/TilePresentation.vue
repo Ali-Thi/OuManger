@@ -7,6 +7,7 @@ export default {
     ListCommentaires
   },
   props: {
+    idRestaurant: Number,
     nom: String,
     adresse: String,
     note: Number
@@ -20,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <ListCommentaires v-if="this.showCommentModal" :nom="nom" :adresse="adresse" :note="note" @closeModal="() => {this.showCommentModal = false}"/>
+  <ListCommentaires v-if="this.showCommentModal" :idRestaurant="idRestaurant" :nom="nom" :adresse="adresse" :note="note" @closeModal="() => {this.showCommentModal = false}"/>
   <div class="bg-white shadow-lg rounded-lg w-full flex flex-col">
 
     <div class="w-full h-4 flex flex-row justify-between align-center px-4 py-2 basis-1/3 shadow-lg">

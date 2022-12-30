@@ -18,6 +18,7 @@ if(isset($_POST['inscription_submit'])){
 
             $req = $bdd->prepare("INSERT INTO utilisateurs(Email, MotDePasse, Nom, Prenom) VALUES(?,?,?,?)");
             if($req->execute(array($email, $motdepasse, $nom, $prenom))){
+                console.log($req->fetch());
                 $_SESSION['connecte'] = true;
                 $_SESSION['nom'] = $nom;
                 $_SESSION['prenom'] = $prenom;

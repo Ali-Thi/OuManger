@@ -2,8 +2,16 @@
 import Navbar from './components/Navbar.vue'
 import Main from './components/Main.vue'
 import ModalAFenetres from './components/modal/ModalAFenetres.vue';
+import {computed} from "vue";
 
 export default {
+
+  provide() {
+    return {
+      // explicitly provide a computed property
+      connecte: computed(() => this.connecte)
+    }
+  },
   components: {
     Navbar,
     Main,
@@ -18,6 +26,7 @@ export default {
       this.connecte = false;
       this.nom = '';
       this.prenom = ''
+      fetch("https://pj-web-pb.alwaysdata.net/php/logOut.php")
     }
   },
   mounted(){
@@ -53,7 +62,7 @@ export default {
 
 <template>
   <header class="bg-white top-0 w-full shadow" style="z-index: 1001">
-  <Navbar :connecte="connecte" @logSignIn="showConnectionModal" @logOut="deconnection">{{nom.toUpperCase() + " " + prenom}}</Navbar>
+  <Navbar :connecte="connecte" @openModal="showConnectionModal" @logOut="deconnection">{{nom.toUpperCase() + " " + prenom}}</Navbar>
   </header>
 
   <div v-if="this.showModal">
@@ -61,6 +70,6 @@ export default {
 =  </div>
 
   <div class="lg:h-full">
-    <Main />
+    <Main/>
   </div>
 </template>

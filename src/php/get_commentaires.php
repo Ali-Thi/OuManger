@@ -1,6 +1,8 @@
 <?php
 require("connectsql.php");
 
+session_start();
+
 if( isset($_GET['nom']) && !empty($_GET['nom']) ||
     isset($_GET['adresse']) && !empty($_GET['adresse']) ){
     $nom = $_GET['nom'];
@@ -16,5 +18,24 @@ if( isset($_GET['nom']) && !empty($_GET['nom']) ||
             echo json_encode($resultat);
         }
     }
+}
+else if(isset($_POST['note']) && !empty($_POST['note']) ||
+    isset($_POST['commentaire']) && !empty($_POST['commentaire'])  ||
+    isset($_POST['idRestaurant']) && !empty($_POST['idRestaurant']) ){
+    echo($_POST['note']);
+    echo($_POST['commentaire']);
+    echo($_POST['idRestaurant']);
+    $note = $_POST['note'];
+    $commentaire = $_POST['commentaire'];
+    $req = $bdd->prepare("
+INSERT INTO commentaires(IdUser, IdResto, Commentaire, Note, DatePublication)
+VALUES ((SELECT IdUser FROM utilisateurs u WHERE u.Nom=? AND u.prenom=?), ?, ?, ?, SYSDATE())");
+    if($req->execute(array($_SESSION['nom'], $_SESSION['prenom'], $_POST['idRestaurant'], $_POST['commentaire'], $_POST['note']))){
+        echo(true);
+    }
+    else{
+        echo(false);
+    }
+    header('Location: ../index.html');
 }
 ?>

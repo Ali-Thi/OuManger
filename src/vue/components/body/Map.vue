@@ -10,18 +10,6 @@ export default {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.mymap);
-
-    this.datas.forEach(element => {
-      const marker = L.marker(element.coord, {riseOnHover: true}).addTo(this.mymap);
-      const popup = L.popup().setContent(
-          '<strong>' + element.nom + '</strong>' +
-          '<span style="margin-left: 1rem">' + element.note + '</span>' +
-          // '<img src="../../../assets/star-icon.png" alt="https://www.vecteezy.com/vector-art/82125-star-vectors" style="display: inline-block; height: 1.25rem; width: 1.25rem;">' +
-          '<img src="/assets/star-icon-e38ac0a3.png" alt="https://www.vecteezy.com/vector-art/82125-star-vectors" style="display: inline-block; height: 1.25rem; width: 1.25rem;">' +
-          '<p>' + element.adresse + '</p>');
-      console.log(marker)
-      marker.bindPopup(popup);
-    })
   },
   data() {
     return {
@@ -34,6 +22,7 @@ export default {
       this.markers.forEach(marker => {
         marker.remove(this.mymap);
       })
+
 
       newVal.forEach(element => {
         const marker = L.marker(element.coord, {riseOnHover: true}).addTo(this.mymap)
