@@ -1,9 +1,9 @@
 <script>
 export default {
-  emits: ['event'],
+  emits: ['openModal'],
   methods: {
-    created(){
-      this.$emit('event', this.text)
+    openModal(){
+      this.$emit('openModal', this.text)
     }
   },
   props: {
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-    <button @click="created" class="
+    <button @click="openModal" class="
     text-sm uppercase font-semibold w-full inline-block px-6 py-2.5
     font-medium text-xs leading-tight rounded shadow-sm
     hover:shadow-lg hover:text-rose-600

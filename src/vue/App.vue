@@ -1,24 +1,50 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Main from './components/Main.vue'
-import Modal from './components/modal/Modal.vue';
+import ModalAFenetres from './components/modal/ModalAFenetres.vue';
 
 export default {
   components: {
     Navbar,
     Main,
-    Modal,
+    ModalAFenetres,
   },
   methods: {
-    handleNavEvent(text){
+    showConnectionModal(text){
       this.showModal = true
       this.typeModal = text.toLowerCase()
+    },
+    deconnection(){
+      this.connecte = false;
+      this.nom = '';
+      this.prenom = ''
     }
+  },
+  mounted(){
+    fetch("https://pj-web-pb.alwaysdata.net/php/session_access.php")
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            alert("Server returned " + response.status + " : " + response.statusText);
+          }
+        })
+        .then(data => {
+          this.connecte = true;
+          this.nom = data[0];
+          this.prenom = data[1];
+        })
+        .catch(err => {
+          console.log(err);
+        });
   },
   data(){
     return{
       showModal: false,
-      typeModal: ''
+      typeModal: '',
+      connecte: false,
+      nom: '',
+      prenom: ''
     }
   }
 }
@@ -27,14 +53,12 @@ export default {
 
 <template>
   <header class="bg-white top-0 w-full shadow" style="z-index: 1001">
-  <Navbar @event="handleNavEvent"/>
+  <Navbar :connecte="connecte" @logSignIn="showConnectionModal" @logOut="deconnection">{{nom.toUpperCase() + " " + prenom}}</Navbar>
   </header>
 
   <div v-if="this.showModal">
-    <div @click.self="() => {this.showModal = false}" class="fixed top-0 left-0 flex w-screen h-screen bg-black bg-opacity-50 justify-center" style="z-index: 1020">
-        <Modal :type="this.typeModal" @close="() => {this.showModal = false}"/>
-    </div>
-  </div>
+        <ModalAFenetres :type="this.typeModal" @closeModal="() => {this.showModal = false}"/>
+=  </div>
 
   <div class="lg:h-full">
     <Main />

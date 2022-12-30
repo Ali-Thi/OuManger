@@ -5,7 +5,7 @@ import Inscription from "./Inscription.vue"
 const EnumMode = {connexion: "connexion", inscription: "inscription"}
 
 export default {
-  emits: ['close'],
+  emits: ['closeModal'],
   components: {
     Connexion,
     Inscription
@@ -28,8 +28,8 @@ export default {
     switchModal(e) {
       this.mode = (this.mode === EnumMode.inscription) ? EnumMode.connexion : EnumMode.inscription;
     },
-    created() {
-      this.$emit('close')
+    closeModal(){
+      this.$emit('closeModal')
     }
   },
   mounted() {
@@ -48,14 +48,14 @@ export default {
 </script>
 
 <template>
-  <div class="fixed top-20 w-auto h-auto" style="z-index: 1030">
-  <div class="bg-white w-auto h-full">
+  <div @click.self="closeModal" class="fixed top-0 left-0 flex w-screen h-screen bg-black bg-opacity-50 justify-center" style="z-index: 1020">
+    <div class="bg-white w-auto h-auto fixed top-20" style="z-index: 1030">
       <header class="flex flex-row h-8 w-full jusitfy-center">
         <span @click="switchModal" ref="boutonConnexion" class="h-full w-full text-center">Connexion</span>
         <span @click="switchModal" ref="boutonInscription" class="h-full w-full text-center">S'inscrire</span>
       </header>
       <div class="mb-8 pt-2 pr-2">
-        <img @click="created" src="../../../assets/close_icon.png" class="w-5 h-5 float-right hover:cursor-pointer">
+        <img @click="closeModal" src="../../../assets/close_icon.png" class="w-5 h-5 float-right hover:cursor-pointer">
       </div>
 
 
@@ -63,7 +63,7 @@ export default {
         <Connexion v-if="this.mode === 'connexion'" @switch="switchModal"/>
         <Inscription v-else @switch="switchModal"/>
       </div>
-      </div>
-
     </div>
+
+  </div>
 </template>

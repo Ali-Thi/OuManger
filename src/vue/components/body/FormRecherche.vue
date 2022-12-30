@@ -7,7 +7,7 @@ export default {
       id: 0,
       input: '',
       msg: '',
-      restaurants: [],
+      restaurants: []
     }
   },
   methods: {
@@ -30,10 +30,11 @@ export default {
             this.restaurants = []
             data.records.forEach(element =>{
               this.restaurants.push({id: this.id++,
-                text: element.fields.nom_restaurant,
+                nom: element.fields.nom_restaurant,
                 adresse: element.fields.adresse + ", " + element.fields.code + ", PARIS",
                 coord: element.fields.tt,
-                note: 3
+                note: '?',
+                commentaires: []
               })
             })
             this.created()
@@ -41,22 +42,6 @@ export default {
           .catch(err => {
             console.log(err);
           });
-      /*fetch("https://nominatim.openstreetmap.org/search/" + this.input + "?format=json&addressdetails=1&limit=1", {
-        method: "GET"
-      })
-          .then(response => {
-            if (response.ok) {
-              return response.json()
-            } else {
-              alert("Server returned " + response.status + " : " + response.statusText);
-            }
-          })
-          .then(data => {
-
-          })
-          .catch(err => {
-            console.log(err);
-          });*/
     }
   }
 }

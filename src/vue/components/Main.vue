@@ -18,6 +18,24 @@ export default {
   methods: {
     handleDatas(markers) {
       this.restaurants = markers
+      this.restaurants.forEach(element =>
+      {
+        fetch("https://pj-web-pb.alwaysdata.net/php/get_note_restaurant.php?nom=" + element.nom.toUpperCase() + "&adresse=" + element.adresse.toUpperCase(),
+        )
+            .then(response => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                alert("Server returned " + response.status + " : " + response.statusText);
+              }
+            })
+            .then(data => {
+              element.note = data['note'];
+            })
+            .catch(err => {
+              console.log(err);
+            });
+      })
     }
   }
 }
