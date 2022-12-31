@@ -28,13 +28,13 @@ export default {
       <h1 class="place-self-start font-semibold">{{ nom }}</h1>
       <div class="place-self-end">
         <span class="self-center">{{ note }}</span>
-        <img src="../../../assets/star-icon.png" class="h-5 w-5 inline-block self-center aspect-square">
+        <img src="../../../../assets/star-icon.png" class="h-5 w-5 inline-block self-center aspect-square">
       </div>
     </header>
 
     <div class="m-4 lg:flex lg:justify-between">
       <div>
-        <img class="h-6 inline-block" src="../../../assets/location_icon.png"
+        <img class="h-6 inline-block" src="../../../../assets/location_icon.png"
              alt="https://www.vecteezy.com/vector-art/362767-location-vector-icon">
         <span>{{ adresse }}</span>
       </div>

@@ -53,11 +53,11 @@ export default {
         <div>
           <h1 class="text-2xl font-bold mr-4 inline-block align-middle">{{ nom }}</h1>
           <span class="text-2xl font-semibold align-middle">{{ note }}</span>
-          <img src="../../../assets/star-icon.png" class="h-5 w-5 align-middle inline-block aspect-square py-auto">
+          <img src="../../../../assets/star-icon.png" class="h-5 w-5 align-middle inline-block aspect-square py-auto">
         </div>
 
         <div>
-          <img @click="closeModal" src="../../../assets/close_icon.png"
+          <img @click="closeModal" src="../../../../assets/close_icon.png"
                class="w-5 h-5 float-right hover:cursor-pointer my-auto">
         </div>
       </header>
@@ -86,7 +86,7 @@ export default {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-            <img src="../../../assets/star-icon.png" class="h-5 w-5 self-center aspect-square">
+            <img src="../../../../assets/star-icon.png" class="h-5 w-5 self-center aspect-square">
           </div>
 
           <textarea type="text" name="commentaire" class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white

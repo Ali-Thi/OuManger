@@ -43,7 +43,7 @@ export default {
       </span>
     <div v-if="connecte">
       <slot class="inline-block"></slot>
-      <img src="../../assets/exit_icon.png" class="w-5 h-5 mx-3 inline-block hover:cursor-pointer"
+      <img src="../../../assets/exit_icon.png" class="w-5 h-5 mx-3 inline-block hover:cursor-pointer"
            alt="https://www.vecteezy.com/vector-art/575503-logout-sign-icon"
            @click="handleEvents('logOut')"
       />

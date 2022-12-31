@@ -6,23 +6,15 @@ export default {
     return {
       input: '',
       listSuggestions: [],
-      inputFocus: false,
+      showListSuggestions: false,
       msg: '',
       apiKey: '99980416dac743c597689a95b89879cd',
       restaurants: []
     }
   },
-  mounted() {
-    this.$refs.input.addEventListener('focusin', () => {
-      this.inputFocus = true
-    })
-    this.$refs.input.addEventListener('focusout', () => {
-      this.inputFocus = false
-    })
-  },
   watch: {
     input() {
-      if (this.input == '') {
+      if (this.input === '') {
         this.listSuggestions = []
       } else {
         fetch("https://api.geoapify.com/v1/geocode/autocomplete?text=" + this.input + "&lang=fr&limit=5&filter=countrycode:fr&format=json&apiKey=99980416dac743c597689a95b89879cd")
@@ -49,6 +41,7 @@ export default {
 
     rechercher(e) {
       e.preventDefault()
+      this.showListSuggestions = false
 
       fetch("https://nominatim.openstreetmap.org/search?q=" + this.input + "&addressdetails=1&format=json&limit=1")
           .then(response => {
@@ -119,27 +112,23 @@ export default {
           .catch(err => {
             console.log(err);
           });*/
-    },
-
-
+    }
   }
 }
 </script>
 
 <template>
-    <form class="relative flex flex-row justify-center text-center text-2xl" autocomplete="off" method="post">
-      <div class="flex grow-0 items-start h-fit mx-auto mt-4">
-        <input ref="input" v-model="input" type="search" class="py-0.5 px-4 rounded-l inline-block focus:border-hidden focus:ring-hidden active:border-hidden active:ring-hidden">
-        <img src="../../../assets/search-icon.png" alt="https://www.vecteezy.com/vector-art/633234-search-icon-symbol-sign"
-             class="rounded-r h-9 bg-white hover:cursor-pointer inline-block"
-             @click="rechercher">
-        <input ref="btnSubmit" @click="rechercher" type="submit" class="hidden">
+  <form class="text-center text-2xl flex justify-center items-center space-x-4" autocomplete="off" method="post">
+    <div class="relative">
+      <div class="flex items-start h-fit mx-auto mt-4">
+        <input v-model="input" type="search" class="py-0.5 px-4 rounded-l inline-block" @focus="() => {this.showListSuggestions = true}">
+        <img src="../../../../assets/search-icon.png" @click="rechercher" class="rounded-r h-9 bg-white hover:cursor-pointer inline-block">
       </div>
 
-      <ul v-if="this.listSuggestions.length > 0 && this.inputFocus"
+      <ul v-if="this.listSuggestions.length > 0 && this.showListSuggestions"
           class="absolute top-full w-full mt-2 bg-white rounded list-none" style="z-index: 1010">
         <li v-for="suggestion in this.listSuggestions" :key="this.listSuggestions.indexOf(suggestion)"
-            class="px-3 w-full text-start border-b-2 hover:bg-gray-200"
+            class="px-3 w-full text-start border-b-2 hover:bg-gray-200 hover:cursor-pointer"
             @click="() => {
               this.input=suggestion.address_line1 + ', ' + suggestion.state + ', ' + suggestion.country
               this.$refs.btnSubmit.click()
@@ -148,5 +137,12 @@ export default {
           <span class="font-normal text-sm text-gray-600 italic">, {{ suggestion.state }}, {{ suggestion.country }}</span>
         </li>
       </ul>
-    </form>
+    </div>
+
+    <div v-if="this.listSuggestions.length > 0 && this.showListSuggestions" class="absolute top-0 left-0 h-screen w-screen" style="z-index: 1001" @click="() => {this.showListSuggestions = false}"></div>
+
+    <!--    <input type="number" class="w-10 rounded h-fit text-sm" value="10">-->
+
+    <input ref="btnSubmit" @click="rechercher" type="submit" class="hidden">
+  </form>
 </template>

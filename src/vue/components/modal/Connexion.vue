@@ -11,7 +11,7 @@ export default {
 
 <template>
   <div class="grid grid-cols-1 place-items-center gap-y-6">
-    <img src="../../../assets/icon_user.png" class="w-16 h-16"
+    <img src="../../../../assets/icon_user.png" class="w-16 h-16"
          alt="https://www.vecteezy.com/vector-art/3586429-people-icon-user-icon-vector-illustration"/>
     <h1 class="uppercase font-bold text-gray-600 font-sans text-2xl">Connexion</h1>
     <form class="grid grid-cols-1 gap-4 place-items-start" action="/php/index.php" method="POST">

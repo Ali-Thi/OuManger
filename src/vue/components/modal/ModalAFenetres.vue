@@ -55,7 +55,7 @@ export default {
         <span @click="switchModal" ref="boutonInscription" class="h-full w-full text-center">S'inscrire</span>
       </header>
       <div class="mb-8 pt-2 pr-2">
-        <img @click="closeModal" src="../../../assets/close_icon.png" class="w-5 h-5 float-right hover:cursor-pointer">
+        <img @click="closeModal" src="../../../../assets/close_icon.png" class="w-5 h-5 float-right hover:cursor-pointer">
       </div>
 
 
