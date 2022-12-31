@@ -16,7 +16,7 @@ if(isset($_POST['inscription_submit'])){
             $email = $_POST['inscription_email'];
             $motdepasse = $_POST['inscription_mdp'];
 
-            $req = $bdd->prepare("INSERT INTO utilisateurs(Email, MotDePasse, Nom, Prenom) VALUES(?,?,?,?)");
+            $req = $bdd->prepare("INSERT INTO Utilisateurs(Email, MotDePasse, Nom, Prenom) VALUES(?,?,?,?)");
             if($req->execute(array($email, $motdepasse, $nom, $prenom))){
                 console.log($req->fetch());
                 $_SESSION['connecte'] = true;
@@ -30,7 +30,7 @@ if(isset($_POST['connexion_submit'])){
     if( isset($_POST['connexion_email']) && !empty($_POST['connexion_email']) ||
         isset($_POST['connexion_mdp']) && !empty($_POST['connexion_mdp']) ){
         $email = $_POST['connexion_email'];
-        $req = $bdd->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+        $req = $bdd->prepare("SELECT * FROM Utilisateurs WHERE email = ?");
         if($req->execute(array($email))) { // Je crée un objet de type PDO qui contient le résultat de la requête
             $nbUtilisateur = $req->rowCount(); // Retourne le nombre de ligne reçu de la requête
             if ($nbUtilisateur == 1) {

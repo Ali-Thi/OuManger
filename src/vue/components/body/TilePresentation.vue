@@ -22,17 +22,17 @@ export default {
 
 <template>
   <ListCommentaires v-if="this.showCommentModal" :idRestaurant="idRestaurant" :nom="nom" :adresse="adresse" :note="note" @closeModal="() => {this.showCommentModal = false}"/>
-  <div class="bg-white shadow-lg rounded-lg w-full flex flex-col">
+  <div class="bg-white shadow-lg rounded-lg w-full h-fit flex flex-col">
 
-    <div class="w-full h-4 flex flex-row justify-between align-center px-4 py-2 basis-1/3 shadow-lg">
+    <header class="w-full flex flex-row justify-between align-center px-4 py-2 basis-1/3 shadow-lg">
       <h1 class="place-self-start font-semibold">{{ nom }}</h1>
       <div class="place-self-end">
-        <span class="place-self-end self-center">{{ note }}</span>
+        <span class="self-center">{{ note }}</span>
         <img src="../../../assets/star-icon.png" class="h-5 w-5 inline-block self-center aspect-square">
       </div>
-    </div>
+    </header>
 
-    <div class="m-4 flex justify-between">
+    <div class="m-4 lg:flex lg:justify-between">
       <div>
         <img class="h-6 inline-block" src="../../../assets/location_icon.png"
              alt="https://www.vecteezy.com/vector-art/362767-location-vector-icon">
