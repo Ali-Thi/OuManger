@@ -52,7 +52,7 @@ export default {
             }
           })
           .then(data => {
-            fetch("https://api.geoapify.com/v2/places?categories=catering.restaurant&apiKey=" + this.apiKey + "&filter=circle:" + data[0].lon + "," + data[0].lat + ",10000")
+            fetch("https://api.geoapify.com/v2/places?categories=catering.restaurant&apiKey=" + this.apiKey + "&filter=circle:" + data[0].lon + "," + data[0].lat + ",5000")
                 .then(response => {
                   if (response.ok) {
                     return response.json();
