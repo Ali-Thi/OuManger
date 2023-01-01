@@ -74,7 +74,7 @@ export default {
         premier !</p>
 
       <footer class="h-20 p-4" style="box-shadow: 0px 0px 15px gray;">
-        <form v-if="connecte" action="https://pj-web-pb.alwaysdata.net/php/get_commentaires.php" method="post" class="flex flex-row justify-between h-full space-x-4">
+        <form v-if="connecte" action="https://pj-web-pb.alwaysdata.net/php/insert_commentaire.php" method="post" class="flex flex-row justify-between h-full space-x-4">
 
           <input name="idRestaurant" :value="this.idRestaurant" type="hidden">
 

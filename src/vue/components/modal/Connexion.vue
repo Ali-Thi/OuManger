@@ -14,14 +14,14 @@ export default {
     <img src="../../../../assets/icon_user.png" class="w-16 h-16"
          alt="https://www.vecteezy.com/vector-art/3586429-people-icon-user-icon-vector-illustration"/>
     <h1 class="uppercase font-bold text-gray-600 font-sans text-2xl">Connexion</h1>
-    <form class="grid grid-cols-1 gap-4 place-items-start" action="/php/index.php" method="POST">
-      <input type="email" name="connexion_email"
+    <form class="grid grid-cols-1 gap-4 place-items-start" action="/php/connexion.php" method="POST">
+      <input required type="email" name="connexion_email"
              class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white
              bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white
              focus:border-blue-600 focus:outline-none"
              placeholder="Adresse mail"/>
 
-      <input type="password" name="connexion_mdp"
+      <input required type="password" name="connexion_mdp"
              class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border
              border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white
              focus:border-blue-600 focus:outline-none"

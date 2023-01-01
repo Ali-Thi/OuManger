@@ -15,6 +15,8 @@ if( isset($_GET['nom']) && !empty($_GET['nom']) ||
         } else{
             echo json_encode($req->fetch());
         }
+    } else{
+        echo json_encode([false, "Erreur interne."]);
     }
 }
 ?>

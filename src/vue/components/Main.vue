@@ -29,8 +29,12 @@ export default {
               }
             })
             .then(data => {
-              element.id = data['id']
-              element.note = (data['note'] === null) ? '' : data['note']
+              if(data.length === 2 && data[0] === false){
+                alert(data[1]);
+              } else {
+                element.id = data['id']
+                element.note = (data['note'] === null) ? '' : data['note']
+              }
             })
             .catch(err => {
               console.log(err);

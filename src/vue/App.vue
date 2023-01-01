@@ -39,9 +39,13 @@ export default {
           }
         })
         .then(data => {
-          this.connecte = true;
-          this.nom = data[0];
-          this.prenom = data[1];
+          if(data !== null && data[0] !== false) {
+            this.connecte = true;
+            this.nom = data[0];
+            this.prenom = data[1];
+          } else if(data[0] === false){
+            alert(data[1])
+          }
         })
         .catch(err => {
           console.log(err);
