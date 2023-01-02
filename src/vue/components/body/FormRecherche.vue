@@ -51,8 +51,8 @@ export default {
               alert("Server returned " + response.status + " : " + response.statusText);
             }
           })
-          .then(data => {
-            fetch("https://api.geoapify.com/v2/places?categories=catering.restaurant&apiKey=" + this.apiKey + "&filter=circle:" + data[0].lon + "," + data[0].lat + ",5000")
+          .then(coord => {
+            fetch("https://api.geoapify.com/v2/places?categories=catering.restaurant&apiKey=" + this.apiKey + "&filter=circle:" + coord[0].lon + "," + coord[0].lat + ",5000")
                 .then(response => {
                   if (response.ok) {
                     return response.json();
@@ -61,57 +61,47 @@ export default {
                   }
                 })
                 .then(data => {
-                  console.log(data)
-                  this.restaurants = []
                   data.features.forEach(element => {
                     this.restaurants.push({
                       id: 0,
                       nom: element.properties.name,
                       adresse: element.properties.address_line2,
-                      rue: element.properties.street,
-                      codePostal: element.properties.postcode,
-                      ville: element.properties.city,
-                      pays: element.properties.country,
                       coord: [element.properties.lat, element.properties.lon],
                       note: ''
                     })
                   })
-                  this.emitDatas()
+
+                  fetch("https://opendata.paris.fr/api/records/1.0/search/?dataset=restaurants-casvp&q=&refine.code=" + coord[0].address['postcode'])
+                      .then(response => {
+                        if (response.ok) {
+                          return response.json();
+                        } else {
+                          alert("Server returned " + response.status + " : " + response.statusText);
+                        }
+                      })
+                      .then(data => {
+                        data.records.forEach(element =>{
+                          if(this.restaurants.find((restaurant) => {restaurant.coord === element.fields.tt}) === undefined) {
+                            this.restaurants.push({
+                              id: 0,
+                              nom: element.fields.nom_restaurant,
+                              adresse: element.fields.adresse.replaceAll(",", "") + ", " + element.fields.code + ", PARIS",
+                              coord: element.fields.tt,
+                              note: ''
+                            })
+                          }
+                        })
+                        this.emitDatas()
+                        })
+                      .catch(err => {console.log(err);})
                 })
                 .catch(err => {
-                  console.log(err);
-                });
-
+                              console.log(err);
+                            });
           })
           .catch(err => {
             console.log(err);
           });
-
-      /*fetch("https://opendata.paris.fr/api/records/1.0/search/?dataset=restaurants-casvp&q=&refine.code=" + this.input, {
-        "method": "GET",
-      })
-          .then(response => {
-            if (response.ok) {
-              return response.json();
-            } else {
-              alert("Server returned " + response.status + " : " + response.statusText);
-            }
-          })
-          .then(data => {
-            this.restaurants = []
-            data.records.forEach(element =>{
-              this.restaurants.push({id: 0,
-                nom: element.fields.nom_restaurant,
-                adresse: element.fields.adresse + ", " + element.fields.code + ", PARIS",
-                coord: element.fields.tt,
-                note: ''
-              })
-            })
-            this.emitDatas()
-          })
-          .catch(err => {
-            console.log(err);
-          });*/
     }
   }
 }
@@ -119,14 +109,14 @@ export default {
 
 <template>
   <form class="text-center text-2xl flex justify-center items-center space-x-4" autocomplete="off" method="post">
-    <div class="relative">
+    <div class="relative" style="z-index: 1010">
       <div class="flex items-start h-fit mx-auto mt-4">
         <input v-model="input" type="search" class="py-0.5 px-4 rounded-l inline-block" @focus="() => {this.showListSuggestions = true}">
         <img src="../../../../assets/search-icon.png" @click="rechercher" class="rounded-r h-9 bg-white hover:cursor-pointer inline-block">
       </div>
 
       <ul v-if="this.listSuggestions.length > 0 && this.showListSuggestions"
-          class="absolute top-full w-full mt-2 bg-white rounded list-none" style="z-index: 1010">
+          class="absolute top-full w-full mt-2 bg-white rounded list-none">
         <li v-for="suggestion in this.listSuggestions" :key="this.listSuggestions.indexOf(suggestion)"
             class="px-3 w-full text-start border-b-2 hover:bg-gray-200 hover:cursor-pointer"
             @click="() => {
@@ -139,9 +129,7 @@ export default {
       </ul>
     </div>
 
-    <div v-if="this.listSuggestions.length > 0 && this.showListSuggestions" class="absolute top-0 left-0 h-screen w-screen" style="z-index: 1001" @click="() => {this.showListSuggestions = false}"></div>
-
-    <!--    <input type="number" class="w-10 rounded h-fit text-sm" value="10">-->
+    <div v-if="this.listSuggestions.length > 0 && this.showListSuggestions" class="fixed top-0 left-0 h-screen w-screen" style="z-index: 1001" @click="() => {this.showListSuggestions = false}"></div>
 
     <input ref="btnSubmit" @click="rechercher" type="submit" class="hidden">
   </form>

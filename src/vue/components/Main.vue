@@ -40,6 +40,22 @@ export default {
               console.log(err);
             });
       })
+    },
+    updateNote(id){
+      fetch("https://pj-web-pb.alwaysdata.net/php/get_info_restaurant.php?id=" + id)
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              alert("Server returned " + response.status + " : " + response.statusText);
+            }
+          })
+          .then(data => {
+            this.restaurants.find((element) => {return element.id === id}).note = data['note']
+          })
+          .catch(err => {
+            console.log(err);
+          });
     }
   }
 }
@@ -59,7 +75,7 @@ export default {
     <div class="mx-auto px-4 w-full h-full grid grid-cols-1 gap-y-10 gap-x-8 overflow-x-scroll
      md:mr-10 md:overflow-y-scroll">
 
-        <ListRestaurants :datas="this.restaurants"/>
+        <ListRestaurants :datas="this.restaurants" @refreshNotes="updateNote"/>
 
     </div>
   </div>

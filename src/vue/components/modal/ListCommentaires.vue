@@ -1,15 +1,54 @@
 <script>
 import Commentaire from "./Commentaire.vue";
+import Note from "../body/Note.vue";
 
 export default {
-  emits: ['closeModal'],
+  emits: ['closeModal', 'refreshNotes'],
   inject: ['connecte'],
   methods: {
     closeModal() {
       this.$emit('closeModal')
+    },
+    updateComments(){
+      fetch("https://pj-web-pb.alwaysdata.net/php/get_commentaires.php?nom=" + this.nom.toUpperCase() + "&adresse=" + this.adresse.toUpperCase())
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              alert("Server returned " + response.status + " : " + response.statusText);
+            }
+          })
+          .then(data => {
+            this.commentaires = data;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
+    postComments(e){
+      e.preventDefault()
+
+      fetch("https://pj-web-pb.alwaysdata.net/php/insert_commentaire.php",{
+        method: "POST",
+        body: JSON.stringify({
+          note: document.getElementsByName('note')[0].value,
+          commentaire: document.getElementsByName('commentaire')[0].value,
+          idRestaurant: document.getElementsByName('idRestaurant')[0].value
+        })
+      })
+          .then(response => {
+        if (response.ok) {
+          this.$emit('refreshNotes', this.idRestaurant)
+          this.$refs.formCommentaire.reset()
+          this.updateComments()
+        } else {
+          alert("Server returned " + response.status + " : " + response.statusText);
+        }
+      })
     }
   },
   components: {
+    Note,
     Commentaire
   },
   props: {
@@ -25,35 +64,21 @@ export default {
     }
   },
   mounted() {
-    fetch("https://pj-web-pb.alwaysdata.net/php/get_commentaires.php?nom=" + this.nom.toUpperCase() + "&adresse=" + this.adresse.toUpperCase())
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            alert("Server returned " + response.status + " : " + response.statusText);
-          }
-        })
-        .then(data => {
-          this.commentaires = data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    this.updateComments()
   }
 }
 </script>
 
 <template>
   <div @click.self="closeModal"
-       class="fixed top-0 left-0 flex w-screen h-screen bg-black bg-opacity-50 justify-center px-16 lg:px-48"
+       class="fixed py-20 top-0 left-0 flex w-screen h-screen bg-black bg-opacity-50 justify-center md:px-48 sm:px-3"
        style="z-index: 1020">
-    <div class="bg-white w-full h-fit relative top-20 rounded overflow-y-scroll" style="z-index: 1030">
+    <div class="bg-white w-full h-fit relative rounded" style="z-index: 1030">
 
-      <header class="w-full flex flex-row justify-between p-4 shadow-lg mb-4">
+      <header class="w-full h-50 flex flex-row justify-between p-4 shadow-lg mb-4">
         <div>
           <h1 class="text-2xl font-bold mr-4 inline-block align-middle">{{ nom }}</h1>
-          <span class="text-2xl font-semibold align-middle">{{ note }}</span>
-          <img src="../../../../assets/star-icon.png" class="h-5 w-5 align-middle inline-block aspect-square py-auto">
+          <Note>{{ note }}</Note>
         </div>
 
         <div>
@@ -62,24 +87,24 @@ export default {
         </div>
       </header>
 
-      <ul v-if="commentaires.length > 0" class="w-full flex flex-col">
+      <div v-if="commentaires.length > 0" class="w-full h-80 overflow-y-scroll">
+      <ul ref="listComms" class="flex flex-col">
         <li v-for="cmnt in commentaires" :key="cmnt.id" class="list-none inline-block mb-3 px-4">
-
-          <Commentaire :nom="cmnt.nom" :prenom="cmnt.prenom" :date="cmnt.date" :message="cmnt.commentaire"/>
-
+          <Commentaire :nom="cmnt.nom" :prenom="cmnt.prenom" :date="cmnt.date" :message="cmnt.commentaire" :note="cmnt.note"/>
         </li>
       </ul>
+      </div>
 
       <p v-else class="text-xl text-center font-thin text-gray-400 mb-4">Aucun commentaire pour le moment. Soyez le
         premier !</p>
 
-      <footer class="h-20 p-4" style="box-shadow: 0px 0px 15px gray;">
-        <form v-if="connecte" action="https://pj-web-pb.alwaysdata.net/php/insert_commentaire.php" method="post" class="flex flex-row justify-between h-full space-x-4">
+      <footer class="h-fit p-4" style="box-shadow: 0px 0px 15px gray;">
+        <form v-if="connecte" ref="formCommentaire" :onsubmit="postComments" method="post" class="flex h-full flex-col space-y-3 justify-start md:flex-row md:justify-between md:space-x-4 lg:flex-row lg:justify-between lg:space-x-4 ">
 
           <input name="idRestaurant" :value="this.idRestaurant" type="hidden">
 
           <div class="flex flex-row mr-4">
-            <select name="note" class="h-fit w-fit my-auto">
+            <select name="note" class="h-fit w-fit mr-1 my-auto">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>

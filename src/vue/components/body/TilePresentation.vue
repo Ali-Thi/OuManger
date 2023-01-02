@@ -1,10 +1,13 @@
 <script>
 
 import ListCommentaires from "../modal/ListCommentaires.vue";
+import Note from "../body/Note.vue";
 
 export default {
+  emits: ['refreshNotes'],
   components: {
-    ListCommentaires
+    ListCommentaires,
+    Note
   },
   props: {
     idRestaurant: Number,
@@ -21,14 +24,13 @@ export default {
 </script>
 
 <template>
-  <ListCommentaires v-if="this.showCommentModal" :idRestaurant="idRestaurant" :nom="nom" :adresse="adresse" :note="note" @closeModal="() => {this.showCommentModal = false}"/>
+  <ListCommentaires v-if="this.showCommentModal" :idRestaurant="idRestaurant" :nom="nom" :adresse="adresse" :note="note" @refreshNotes="(id) => {this.$emit('refreshNotes', id)}" @closeModal="() => {this.showCommentModal = false}"/>
   <div class="bg-white shadow-lg rounded-lg w-full h-fit flex flex-col">
 
     <header class="w-full flex flex-row justify-between align-center px-4 py-2 basis-1/3 shadow-lg">
       <h1 class="place-self-start font-semibold">{{ nom }}</h1>
       <div class="place-self-end">
-        <span class="self-center">{{ note }}</span>
-        <img src="../../../../assets/star-icon.png" class="h-5 w-5 inline-block self-center aspect-square">
+        <Note>{{ note }}</Note>
       </div>
     </header>
 

@@ -18,5 +18,12 @@ if( isset($_GET['nom']) && !empty($_GET['nom']) ||
     } else{
         echo json_encode([false, "Erreur interne."]);
     }
+} elseif (isset($_GET['id'])){
+    $req = $bdd->prepare("SELECT Note AS note FROM Restaurants r WHERE r.IdResto=?;");
+    if($req->execute(array($_GET['id']))){
+        echo json_encode($req->fetch());
+    } else{
+        echo json_encode([false, "Erreur interne."]);
+    }
 }
 ?>
