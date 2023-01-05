@@ -1,7 +1,7 @@
 <script>
 
 export default {
-  emits: ['restaurants'],
+  emits: ['restaurants', 'coords', 'rayon'],
   data() {
     return {
       input: '',
@@ -9,7 +9,8 @@ export default {
       showListSuggestions: false,
       msg: '',
       apiKey: '99980416dac743c597689a95b89879cd',
-      restaurants: []
+      restaurants: [],
+      rayon: 5
     }
   },
   watch: {
@@ -35,13 +36,10 @@ export default {
     }
   },
   methods: {
-    emitDatas() {
-      this.$emit('restaurants', this.restaurants)
-    },
-
     rechercher(e) {
       e.preventDefault()
       this.showListSuggestions = false
+      this.restaurants = []
 
       fetch("https://nominatim.openstreetmap.org/search?q=" + this.input + "&addressdetails=1&format=json&limit=1")
           .then(response => {
@@ -52,7 +50,9 @@ export default {
             }
           })
           .then(coord => {
-            fetch("https://api.geoapify.com/v2/places?categories=catering.restaurant&apiKey=" + this.apiKey + "&filter=circle:" + coord[0].lon + "," + coord[0].lat + ",5000")
+            this.$emit('coords', [coord[0].lat, coord[0].lon])
+            this.$emit('rayon', this.rayon)
+            fetch("https://api.geoapify.com/v2/places?categories=catering.restaurant&apiKey=" + this.apiKey + "&filter=circle:" + coord[0].lon + "," + coord[0].lat + "," + this.rayon*1000)
                 .then(response => {
                   if (response.ok) {
                     return response.json();
@@ -91,7 +91,7 @@ export default {
                             })
                           }
                         })
-                        this.emitDatas()
+                        this.$emit('restaurants', this.restaurants)
                         })
                       .catch(err => {console.log(err);})
                 })
@@ -112,7 +112,15 @@ export default {
     <div class="relative" style="z-index: 1010">
       <div class="flex items-start h-fit mx-auto mt-4">
         <input v-model="input" type="search" class="py-0.5 px-4 rounded-l inline-block" @focus="() => {this.showListSuggestions = true}">
-        <img src="../../../../assets/search-icon.png" @click="rechercher" class="rounded-r h-9 bg-white hover:cursor-pointer inline-block">
+        <img src="../../../../assets/search-icon.png" @click="rechercher" class="h-9 bg-white hover:cursor-pointer inline-block">
+        <select v-model="rayon" class="border-none h-9 rounded-r">
+          <option value="5">5km</option>
+          <option value="10">10km</option>
+          <option value="15">15km</option>
+          <option value="20">20km</option>
+          <option value="25">25km</option>
+          <option value="30">30km</option>
+        </select>
       </div>
 
       <ul v-if="this.listSuggestions.length > 0 && this.showListSuggestions"

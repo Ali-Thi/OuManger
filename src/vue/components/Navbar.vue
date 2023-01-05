@@ -39,7 +39,7 @@ export default {
 <template>
   <nav class="bg-white max-w-7xl mx-auto font-poppins p-3.5 flex items-center justify-between">
       <span aria-hidden="true" class="text-lg lg:text-xl">
-        PJ <strong>WEB</strong>
+        Où<strong>Manger</strong>?
       </span>
     <div v-if="connecte">
       <slot class="inline-block"></slot>

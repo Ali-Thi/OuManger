@@ -43,7 +43,7 @@ export default {
             this.connecte = true;
             this.nom = data[0];
             this.prenom = data[1];
-          } else if(data[0] === false){
+          } else if(!data[0]){
             alert(data[1])
           }
         })
