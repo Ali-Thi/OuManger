@@ -65,7 +65,7 @@ export default {
 
 <template>
   <div class="my-8">
-    <h1 class="text-white uppercase font-bold text-bold text-center text-4xl">Bienvenue sur le site !</h1>
+    <h1 class="text-white uppercase font-bold text-bold text-center text-4xl">Bienvenue !</h1>
     <FormRecherche @coords="(coords) => {this.coords = coords}" @rayon="(rayon) => {this.rayon = rayon}" @restaurants="handleDatas"/>
   </div>
 
@@ -74,8 +74,8 @@ export default {
       <Map :coords="this.coords" :rayon="this.rayon" :datas="this.restaurants"/>
     </div>
 
-    <div class="mx-auto px-4 w-full h-full grid grid-cols-1 gap-y-10 gap-x-8 overflow-x-scroll
-     md:mr-10 md:overflow-y-scroll">
+    <div class="mx-4 px-4 w-fit h-fit grid grid-cols-1 gap-x-8 overflow-auto
+     md:h-full md:gap-y-10 lg:h-full lg:gap-y-10">
 
         <ListRestaurants :datas="this.restaurants" @refreshNotes="updateNote"/>
 

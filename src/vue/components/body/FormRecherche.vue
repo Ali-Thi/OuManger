@@ -110,9 +110,10 @@ export default {
 <template>
   <form class="text-center text-2xl flex justify-center items-center space-x-4" autocomplete="off" method="post">
     <div class="relative" style="z-index: 1010">
-      <div class="flex items-start h-fit mx-auto mt-4">
-        <input v-model="input" type="search" class="py-0.5 px-4 rounded-l inline-block" @focus="() => {this.showListSuggestions = true}">
-        <img src="../../../../assets/search-icon.png" @click="rechercher" class="h-9 bg-white hover:cursor-pointer inline-block">
+      <div class="flex flex-col md:flex-row lg:flex-row items-start h-fit mx-auto mt-4">
+        <input v-model="input" type="search" class="w-fit py-0.5 px-4 rounded inline-block md:rounded-none md:rounded-l lg:rounded-none lg:rounded-l" @focus="() => {this.showListSuggestions = true}">
+        <div class="flex justify-center w-full mt-2 md:mt-0 lg:mt-0">
+        <img src="../../../../assets/search-icon.png" @click="rechercher" class="h-9 bg-white hover:cursor-pointer inline-block rounded-l md:rounded-none lg:rounded-none">
         <select v-model="rayon" class="border-none h-9 rounded-r">
           <option value="5">5km</option>
           <option value="10">10km</option>
@@ -121,6 +122,7 @@ export default {
           <option value="25">25km</option>
           <option value="30">30km</option>
         </select>
+        </div>
       </div>
 
       <ul v-if="this.listSuggestions.length > 0 && this.showListSuggestions"
